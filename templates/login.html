@@ -2,25 +2,23 @@
 	<div>
 		<h3>Please Log In </h3><br />
 	</div>
-    <div>
-        Email
-    </div>
-    <div>
-        <input type="text" ng-model="user.email" />
-    </div>
-    <div>
-        Password
-    </div>
-    <div>
-         <input type="password" ng-model="user.password" />
-    </div>
-    <br />
-    <div>
-        <button type="button" ng-model="submitLogin" class="btn btn-primary" ng-click="submit()">
-            Login
-        </button>
-    </div>
-    <div>
-        {{ output }}
-    </div>
+	<form class="login">
+		<div class="{{ userInput }}">
+			<label for="emailInput">Email</label>
+			<input type="text" class="form-control" ng-model="user.email" id="emailInput" placeholder="Email" />
+			<span class="{{ userSpan }}" aria-hidden="true"></span>
+			<div class="textContainer">{{ userError }}</div>
+		</div>
+		<div class="{{ passwordInput }}">
+			<label for="passwordInput">Password</label>
+			 <input type="password" class="form-control" ng-model="user.password" id="passwordInput" placeholder="Password" />
+			<span class="{{ passwordSpan }}" aria-hidden="true"></span>
+			<div class="textContainer">{{ passwordError }}</div>
+		</div>
+		<div>
+			<button type="button" ng-model="submitLogin" class="btn btn-default" ng-click="submit()">
+				Login
+			</button>
+		</div>
+	</form>
 </div>

@@ -42,6 +42,10 @@ if(isset($_POST["email"])){
 				$returnValue["addBill"] = "Fail";
 			}
 			*/
+
+			$friend = (string)$Obj->retrieveFriends($email)[0]["friend"];
+			echo "friend:".$friend;
+			
 			$return = $Obj->retrieveBills($email);
 			$count = 0;
 			foreach($return as $id){

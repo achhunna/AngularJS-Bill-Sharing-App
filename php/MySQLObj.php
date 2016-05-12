@@ -135,5 +135,21 @@ class MySQLObj{
 		}
 	}
 
+	//functions to retrieve friends
+	public function retrieveFriends($useremail){
+		$returnValue = array();
+		$id = 0;
+		$query = "SELECT friend FROM friends WHERE useremail='".$useremail."'";
+
+		$result = $this->con->query($query);
+
+		if($result != null && (mysqli_num_rows($result) >= 1)){
+			while($row = $result->fetch_array(MYSQLI_ASSOC)){
+				$returnValue[$id] = $row;
+				$id += 1;
+			}
+		}
+		return $returnValue;
+	}
 }
 ?>
