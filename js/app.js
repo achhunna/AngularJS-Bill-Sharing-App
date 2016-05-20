@@ -109,9 +109,9 @@ billyApp.factory("$myService", function($cookies, $http){
 		},
 	};
 });
-
+/*
 //Create a receipt object using service
-billyApp.factory("$receiptObj", function($html){
+billyApp.factory("$receiptObj", function($http){
 
 	//Instantiate receiptObj
 	var receiptObj = function(email, category, note, expgroup, amount){
@@ -129,11 +129,4 @@ billyApp.factory("$receiptObj", function($html){
 
 	return receiptObj;
 
-});
-
-//Set cookie expiration date
-function cookieExp(){
-	var now = new Date();
-	now.setDate(now.getDate() + 30); //30 days expiration
-	return now;
-}
+});*/

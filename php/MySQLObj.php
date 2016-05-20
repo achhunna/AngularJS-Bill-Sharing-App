@@ -112,7 +112,8 @@ class MySQLObj{
 		}
 		return $returnValue;
 	}
-
+	
+	//function for adding new bill
 	public function addBill($useremail, $category, $note, $expgroup, $amount){
 		$query = "INSERT INTO bills SET useremail=?, category=?, note=?, expgroup=?, amount=?";
 		$execute = $this->con->prepare($query);
@@ -122,6 +123,19 @@ class MySQLObj{
 		}
 
 		$execute->bind_param("ssssd", $useremail, $category, $note, $expgroup, $amount);
+		return $execute->execute();
+	}
+
+	//function for updating existing bill
+	public function editBill($id, $useremail, $category, $note, $expgroup, $amount){
+		$query = "UPDATE bills SET useremail=?, category=?, note=?, expgroup=?, amount=? WHERE id=?";
+		$execute = $this->con->prepare($query);
+
+		if(!$execute){
+			throw new Exception($execute->error);
+		}
+
+		$execute->bind_param("ssssdd", $useremail, $category, $note, $expgroup, $amount, $id);
 		return $execute->execute();
 	}
 
