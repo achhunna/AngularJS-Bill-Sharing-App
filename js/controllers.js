@@ -112,8 +112,8 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 				$scope.noAmount = "";
 				//URL to submit receipt
 				var submitUrl = "./php/postReceipt.php";
-
-				var data = {"email":$scope.email, "category":$scope.categorySelect, "note":$scope.note, "expgroup":$scope.expgroupSelect, "amount":$scope.amount};
+				//console.log($scope.submitType);
+				var data = {"id":$scope.id, "email":$scope.email, "category":$scope.categorySelect, "note":$scope.note, "expgroup":$scope.expgroupSelect, "amount":$scope.amount, "action":$scope.submitType};
 				$http.post(submitUrl, data)
 					.success(function(data){
 						//Call function to load bills
@@ -121,9 +121,9 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 						$myService.reset($scope, username, email);
 					})
 					.error(function(err) {
-						$log.error(err);
+						console.log(err);
 					})
-				
+
 				//Hide receipt sheet
 				$scope.showReceiptSheet = false;
 			}else{
@@ -134,6 +134,27 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 		//Mouse hover options
 		$scope.hover = function(bill){
 			return bill.options = ! bill.options;
+		};
+
+		//Edit clicked
+		$scope.edit = function(id){
+			//URL to editing existing receipt
+			var editUrl = "./php/editReceipt.php";
+
+			showHideReceipt($scope);
+			$scope.id = Number(id);
+			$.each($scope.bills, function(key, value){
+				$.each(value, function(k,v){
+					//console.log(k + ":" + v);
+					if(k == "id" && v == $scope.id){
+						//console.log(k + ":" + v);
+						$scope.categorySelect = value["category"];
+						$scope.note = value["note"];
+						$scope.amount = Number(value["amount"]);
+					};
+				});
+			});
+			$scope.submitType = "edit";
 		};
 
 		//Delete clicked
@@ -160,17 +181,15 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 				$cookies.remove(k);
 			});
 		}
-		
+
 		//Reset receipt sheet
-		$scope.resetReceipt = function(){
+		$scope.openReceipt = function(){
+			$scope.id = null;
 			$scope.categorySelect = $scope.categories[1];
 			$scope.note = "";
 			$scope.amount = "";
-			if($scope.showReceiptSheet){
-				$scope.showReceiptSheet = false;
-			}else{
-				$scope.showReceiptSheet = true;
-			}
+			$scope.submitType = "add";
+			showHideReceipt($scope);
 		}
 	}
 });

@@ -1,31 +1,33 @@
-//override default bootstrap font size
 * {
-	font-size: 10.0em;
+	//font-size: 17px;
 }
-
+h1 {
+	font-size: 100px;
+}
 .red{
-	color: red;
+	color: DarkRed;
 }
-
 .login{
 	width: 300px;
 	display: inline-block;
 }
-
 hr{
 	border: 1px dashed #C0C0C0;
 }
-
 #receipt{
 	border: 1px solid #C8C8C8;
-	border-radius: 5px;
 	padding: 20px;
+    border-radius: 20px;
+}
+.receiptsTable{
+	table-layout: fixed;
 }
 
-#tableDisplay{
-	//width: 400px;
+tr{
+	height: 35px;
 }
-//Bootstrap dropdown css
+
+/* Dropdown submenu css */
 .dropdown-submenu {
     position: relative;
 }

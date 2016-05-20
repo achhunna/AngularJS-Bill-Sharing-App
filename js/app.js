@@ -1,14 +1,23 @@
 //Create a module
 var billyApp = angular.module("billyApp", ["ngRoute","ngCookies"]);
 
-//ngRoute to manage page loads
-billyApp.config(function($routeProvider){
+billyApp.config(function($routeProvider, $locationProvider){
+	//Enable HTML5 Mode for pushState URL
+	$locationProvider.html5Mode(true);
+
+	//ngRoute to manage page loads
 	$routeProvider
 	.when("/", {
-		templateUrl: "templates/login.html"
+		templateUrl: "templates/login.html",
+		controller: "loginController"
 	})
 	.when("/dash", {
-		templateUrl: "templates/dash.html"
+		templateUrl: "templates/dash.html",
+		controller: "dashController"
+	})
+	.when("/friends", {
+		templateUrl: "templates/friends.html",
+		controller: "friendsController"
 	})
 	.otherwise({
 		redirectTo: "/"
@@ -97,7 +106,7 @@ billyApp.factory("$myService", function($cookies, $http){
 			.error(function(err){
 				console.error(err);
 			})
-		}
+		},
 	};
 });
 
