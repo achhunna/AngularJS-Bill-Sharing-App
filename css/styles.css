@@ -18,11 +18,13 @@ hr{
 	border: 1px solid #C8C8C8;
 	padding: 20px;
     border-radius: 20px;
+	position: fixed;
+	//width: 500px;
+	z-index: 1000;
 }
 .receiptsTable{
 	table-layout: fixed;
 }
-
 tr{
 	height: 35px;
 }

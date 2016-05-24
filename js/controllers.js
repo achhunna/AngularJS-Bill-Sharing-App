@@ -89,6 +89,19 @@ billyApp.controller("loginController", function($myService, $scope, $http, $loca
 
 //dashController to display output from bills table
 billyApp.controller("dashController", function($myService, $scope, $http, $location, $cookies){
+
+	//Modal callback function run when document loads
+	$(document).on("click", ".btn-ok", function(){
+		var id = $(this).data("billId");
+		$scope.delete(id);
+		$("#confirmDelete").modal("hide");
+	});
+
+	$(document).on("show.bs.modal", function(e) {
+		var data = $(e.relatedTarget).data();
+		$(".btn-ok", this).data("billId", data.billId);
+	});
+
 	//Check used logged in
 	if(!$cookies.get("userId")){
 		console.log("User is not logged in.");
@@ -141,7 +154,7 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 			//URL to editing existing receipt
 			var editUrl = "./php/editReceipt.php";
 
-			showHideReceipt($scope);
+			showReceipt($scope);
 			$scope.id = Number(id);
 			$.each($scope.bills, function(key, value){
 				$.each(value, function(k,v){
@@ -189,7 +202,11 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 			$scope.note = "";
 			$scope.amount = "";
 			$scope.submitType = "add";
-			showHideReceipt($scope);
+			showReceipt($scope);
+		}
+
+		$scope.closeReceipt = function(){
+			hideReceipt($scope);
 		}
 	}
 });
