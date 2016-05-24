@@ -18,11 +18,11 @@
 			</div>
 		</div>
 	</div>
-	
+
 	<!-- Bills -->
 
 	<div class="col-xs-12 col-md-6">
-	
+
 		<!-- Menu -->
 		<div class="dropdown">
 			<button class="btn btn-default dropdown-toggle" type="button" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
@@ -47,7 +47,7 @@
 				</button>
 			</p>
 		</div>
-		
+
 		Balance for {{ username }}
 		<div class="container-fluid text-center">
 			<span class="dollarSymbol">$</span>
@@ -90,14 +90,14 @@
 
 	<!-- Receipt -->
 
-	<div  class="col-xs-12 col-md-6 pull-left">
+	<div  class="col-xs-12 col-md-6 pull-left" id="receiptId">
 
 		<div id="receipt" class="form-group" ng-show="showReceiptSheet">
 			Receipt for {{ username }}
 			<br /><br />
 			<div class="container-fluid text-center">
 				<span class="dollarSymbol">$</span>
-				<input type="number" class="input-currency" placeholder="0.00" max="9999" ng-model="amount" />
+				<input type="number" class="input-currency" placeholder="0.00" max="9999" ng-model="amount" autofocus/>
 				<br />
 				<span class="red">{{ noAmount }}</span>
 			</div>

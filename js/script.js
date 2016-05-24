@@ -5,12 +5,21 @@ function cookieExp(){
 	return now;
 }
 
+//Scroll function
+function scrollToID(id, speed){
+	var offSet = 0;
+	var targetOffset = $(id).offset().top - offSet;
+	$('html,body').animate({scrollTop:targetOffset}, speed);
+}
+
 //Functions to show and hide receipt
 function showReceipt($scope){
 	if(!$scope.showReceiptSheet){
 		$scope.showReceiptSheet = true;
 		//Disable openReceipt button
 		$("#openReceipt").addClass("disabled");
+		//Scroll to receipt div
+		scrollToID("#receiptId", 500);
 	}
 }
 

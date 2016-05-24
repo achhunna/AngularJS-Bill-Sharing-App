@@ -139,7 +139,7 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 					})
 
 				//Hide receipt sheet
-				$scope.showReceiptSheet = false;
+				hideReceipt($scope);
 			}else{
 				$scope.noAmount = "Please enter receipt amount";
 			}
