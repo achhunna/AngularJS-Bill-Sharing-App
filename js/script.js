@@ -9,11 +9,15 @@ function cookieExp(){
 function showReceipt($scope){
 	if(!$scope.showReceiptSheet){
 		$scope.showReceiptSheet = true;
+		//Disable openReceipt button
+		$("#openReceipt").addClass("disabled");
 	}
 }
 
 function hideReceipt($scope){
 	if($scope.showReceiptSheet){
 		$scope.showReceiptSheet = false;
+		//Enable openReceipt button
+		$("#openReceipt").removeClass("disabled");
 	}
 }

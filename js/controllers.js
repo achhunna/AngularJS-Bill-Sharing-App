@@ -90,14 +90,15 @@ billyApp.controller("loginController", function($myService, $scope, $http, $loca
 //dashController to display output from bills table
 billyApp.controller("dashController", function($myService, $scope, $http, $location, $cookies){
 
-	//Modal callback function run when document loads
+	//Callback function when .btn-ok clicked
 	$(document).on("click", ".btn-ok", function(){
 		var id = $(this).data("billId");
 		$scope.delete(id);
 		$("#confirmDelete").modal("hide");
 	});
-
+	//Callback function run when modal is open
 	$(document).on("show.bs.modal", function(e) {
+		hideReceipt($scope);
 		var data = $(e.relatedTarget).data();
 		$(".btn-ok", this).data("billId", data.billId);
 	});
@@ -168,6 +169,7 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 				});
 			});
 			$scope.submitType = "edit";
+			$scope.noAmount = "";
 		};
 
 		//Delete clicked
@@ -207,6 +209,7 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 
 		$scope.closeReceipt = function(){
 			hideReceipt($scope);
+			$scope.noAmount = "";
 		}
 	}
 });

@@ -109,6 +109,17 @@ billyApp.factory("$myService", function($cookies, $http){
 		},
 	};
 });
+
+/* Custom currency format filter */
+billyApp.filter('customCurrency', function() {
+    return function (value) {
+		value = Math.round(value);
+        if (value < 0) {
+            value = '(' + Math.abs(value) + ')';
+        }
+        return value;
+    };
+});
 /*
 //Create a receipt object using service
 billyApp.factory("$receiptObj", function($http){
