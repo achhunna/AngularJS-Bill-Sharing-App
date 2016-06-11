@@ -1,0 +1,20 @@
+{
+  "uploadOnSave": true,
+  "useAtomicWrites": false,
+  "deleteLocal": true,
+  "hostname": "achhunna.com",
+  "port": "22",
+  "ignore": [
+    ".remote-sync.json",
+    ".gitignore",
+    "README.md",
+    ".DS_Store",
+    ".git/**",
+    "php/myDBInfo.php"
+  ],
+  "username": "ec2-user",
+  "keyfile": "/Users/achhunna/Documents/Github/aws-ec2-key.pem",
+  "watch": [],
+  "transport": "scp",
+  "target": "/var/www/html/project/evenup"
+}

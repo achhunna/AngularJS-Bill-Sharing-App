@@ -5,10 +5,9 @@ function cookieExp(){
 	return now;
 }
 
-//Scroll function
+//Scroll animation when receipt opens
 function scrollToID(id, speed){
-	var offSet = 0;
-	var targetOffset = $(id).offset().top - offSet;
+	var targetOffset = $(id).offset().top;
 	$('html,body').animate({scrollTop:targetOffset}, speed);
 }
 
@@ -17,16 +16,22 @@ function showReceipt($scope){
 	if(!$scope.showReceiptSheet){
 		$scope.showReceiptSheet = true;
 		//Disable openReceipt button
-		$("#openReceipt").addClass("disabled");
-		//Scroll to receipt div
-		scrollToID("#receiptId", 500);
+		$("#openReceipt").prop('disabled', true);
 	}
+	//Scroll to receipt div
+	scrollToID("#receiptId", 500);
 }
-
 function hideReceipt($scope){
 	if($scope.showReceiptSheet){
 		$scope.showReceiptSheet = false;
 		//Enable openReceipt button
-		$("#openReceipt").removeClass("disabled");
+		$("#openReceipt").prop('disabled', false);
 	}
+}
+
+//Maximum number for amount entered
+function limitKeypress(event, value, maxLength) {
+    if (value != undefined && value.toString().length >= maxLength) {
+        event.preventDefault();
+    }
 }

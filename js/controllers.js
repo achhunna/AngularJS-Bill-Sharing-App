@@ -1,8 +1,8 @@
 //loginController to manage login
-billyApp.controller("loginController", function($myService, $scope, $http, $location, $cookies){
+evenup.controller("loginController", function($myService, $scope, $http, $location, $cookies){
 	//Check used logged in
 	if(!!$cookies.get("userId")){
-		console.log("User is logged in.");
+		//console.log("User is logged in.");
 		$location.path("/dash");
 	}else{
 		//Declare variables
@@ -88,7 +88,7 @@ billyApp.controller("loginController", function($myService, $scope, $http, $loca
 });
 
 //dashController to display output from bills table
-billyApp.controller("dashController", function($myService, $scope, $http, $location, $cookies){
+evenup.controller("dashController", function($myService, $scope, $http, $location, $cookies){
 
 	//Callback function when .btn-ok clicked
 	$(document).on("click", ".btn-ok", function(){
@@ -170,6 +170,9 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 			});
 			$scope.submitType = "edit";
 			$scope.noAmount = "";
+			
+			//Enable delete button
+			$("#deleteButton").prop('disabled', false);
 		};
 
 		//Delete clicked
@@ -205,17 +208,21 @@ billyApp.controller("dashController", function($myService, $scope, $http, $locat
 			$scope.amount = "";
 			$scope.submitType = "add";
 			showReceipt($scope);
+			
+			//Disable delete button
+			$("#deleteButton").prop('disabled', true);
 		}
 
 		$scope.closeReceipt = function(){
 			hideReceipt($scope);
 			$scope.noAmount = "";
 		}
+		
 	}
 });
 
 //friendController to display friends
-billyApp.controller("friendsController", function($myService, $scope, $http, $location){
+evenup.controller("friendsController", function($myService, $scope, $http, $location){
 	var friendUrl = "./php/friends.php";
 	var email = $myService.returnEmail();
 	//Load friends

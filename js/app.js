@@ -1,7 +1,7 @@
 //Create a module
-var billyApp = angular.module("billyApp", ["ngRoute","ngCookies"]);
+var evenup = angular.module("evenup", ["ngRoute","ngCookies"]);
 
-billyApp.config(function($routeProvider, $locationProvider){
+evenup.config(function($routeProvider, $locationProvider){
 	//Enable HTML5 Mode for pushState URL
 	$locationProvider.html5Mode(true);
 
@@ -15,17 +15,13 @@ billyApp.config(function($routeProvider, $locationProvider){
 		templateUrl: "templates/dash.html",
 		controller: "dashController"
 	})
-	.when("/friends", {
-		templateUrl: "templates/friends.html",
-		controller: "friendsController"
-	})
 	.otherwise({
 		redirectTo: "/"
 	})
 })
 
-//Create billsService for app functions
-billyApp.factory("$myService", function($cookies, $http){
+//Create factory for common app functions
+evenup.factory("$myService", function($cookies, $http){
 	var user = {
 		id: $cookies.get("userId"),
 		name: $cookies.get("username"),
@@ -111,18 +107,19 @@ billyApp.factory("$myService", function($cookies, $http){
 });
 
 /* Custom currency format filter */
-billyApp.filter('customCurrency', function() {
+evenup.filter("customCurrency", function() {
     return function (value) {
 		value = Math.round(value);
         if (value < 0) {
-            value = '(' + Math.abs(value) + ')';
+            value = "(" + Math.abs(value) + ")";
         }
-        return value;
+        return value.toLocaleString();
     };
 });
+
 /*
 //Create a receipt object using service
-billyApp.factory("$receiptObj", function($http){
+evenup.factory("$receiptObj", function($http){
 
 	//Instantiate receiptObj
 	var receiptObj = function(email, category, note, expgroup, amount){

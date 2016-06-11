@@ -20,8 +20,7 @@
 	</div>
 
 	<!-- Bills -->
-
-	<div class="col-xs-12 col-md-6">
+	<div class="col-xs-12 col-md-6 mainview" id="billsId">
 
 		<!-- Menu -->
 		<div class="dropdown">
@@ -33,11 +32,11 @@
 				<li class="dropdown-submenu">
 					<a href="">Group</a>
 					<ul class="dropdown-menu">
-						<li><a href="./">Household</a></li>
-						<li><a href="./">Events</a></li>
+						<li><a href="">Household</a></li>
+						<li><a href="">Events</a></li>
 					</ul>
 				</li>
-				<li><a href="./friends">Friends</a></li>
+				<li><a href="">Friends</a></li>
 				<li role="separator" class="divider"></li>
 				<li><a href="./" ng-click="logout()">Log Out</a></li>
 			</ul>
@@ -47,30 +46,37 @@
 				</button>
 			</p>
 		</div>
-
-		Balance for {{ username }}
+		<br />
+		<div class="container-fluid text-center tableTitle">
+			Balance for {{ username }}
+		</div>
 		<div class="container-fluid text-center">
 			<span class="dollarSymbol">$</span>
 			<span class="dollarAmount" ng-class="{ red: total < 0 }">
 				{{ total | customCurrency }}
 			</span>
 		</div>
-		<div align="center">
+		<div class="center">
 			<table class="table table-hover table-condensed receiptsTable">
+				<col width="35%">
+				<col width="45%">
+				<col width="20%">
 				<thead>
 					<tr>
 						<th>Category</th>
 						<th>Note</th>
-						<th class="text-center">Amount</th>
+						<th>Amount</th>
+						<!--
 						<th></th>
+						-->
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="{{ bill.class }}" ng-repeat="bill in bills | orderBy:'timestamp':'reverse'" ng-mouseenter="hover(bill)" ng-mouseleave="hover(bill)">
+					<tr class="{{ bill.class }}" ng-repeat="bill in bills | orderBy:'timestamp':'reverse'" ng-mouseenter="hover(bill)" ng-mouseleave="hover(bill)" ng-click="!(bill.options&&bill.useremail==email) || edit(bill.id); showDelete=false">
 						<td>{{ bill.category }}</td>
 						<td>{{ bill.note }}</td>
 						<td class="text-right">{{ bill.amount | currency:"$":0}}</td>
-
+						<!--
 						<td align="center">
 							<div ng-show="bill.options&&bill.useremail==email">
 								<button class="btn btn-default btn-xs" ng-click="edit(bill.id)">
@@ -81,7 +87,7 @@
 								</button>
 							</div>
 						</td>
-
+						-->
 					</tr>
 				</tbody>
 			</table>
@@ -90,34 +96,43 @@
 
 	<!-- Receipt -->
 
-	<div  class="col-xs-12 col-md-6 pull-left" id="receiptId">
+	<div  class="col-xs-12 col-md-6 center" id="receiptId">
 
-		<div id="receipt" class="form-group" ng-show="showReceiptSheet">
-			Receipt for {{ username }}
-			<br /><br />
-			<div class="container-fluid text-center">
+		<div id="receipt" class="form-group receipt" ng-show="showReceiptSheet">
+			<div class="container-fluid text-center receiptTitle">
+				Receipt
+				<span class="right"><a href="" ng-click="closeReceipt()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></a></span>
+			</div>
+			<br />
+			<div class="container-fluid">
 				<span class="dollarSymbol">$</span>
-				<input type="number" class="input-currency" placeholder="0.00" max="9999" ng-model="amount" autofocus/>
+				<input type="number" class="input-currency" placeholder="0" max="9999"  onkeypress="limitKeypress(event,this.value,4)" ng-model="amount" autofocus/>
 				<br />
 				<span class="red">{{ noAmount }}</span>
 			</div>
-			<hr />
-			<div class="containger-fluid">
-				<h3>Category</h3>
-					<select class="form-control" ng-model="categorySelect" ng-options="category for category in categories"></select>
-			</div>
-			<div class="containger-fluid">
-				<h3>Notes</h3>
-					<input type="text" class="form-control input-lg" placeholder="Note" maxlength="20" ng-model="note" />
-			</div>
-			<br />
-			<div class="container-fluid text-center">
-				<button class="btn btn-default btn-lg" ng-click="submit()">
-					<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
-				</button>
-				<button class="btn btn-danger btn-lg" ng-click="closeReceipt()">
-					<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-				</button>
+
+			<div class="receiptBottom">
+				<hr />
+				<div class="containger-fluid">
+					<h3>Category</h3>
+						<select class="form-control" ng-model="categorySelect" ng-options="category for category in categories"></select>
+				</div>
+				<div class="containger-fluid">
+					<h3>Notes</h3>
+						<input type="text" class="form-control input-lg" placeholder="Note" maxlength="30" ng-model="note" />
+				</div>
+				<br />
+				<div class="container-fluid text-center">
+					<button class="btn btn-default btn-lg" ng-click="submit()">
+						<span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+						Save
+					</button>
+					&nbsp;&nbsp;
+					<button id="deleteButton" class="btn btn-danger btn-lg" data-toggle="modal" data-target="#confirmDelete" data-bill-id="{{ id }}">
+						<span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+						Delete
+					</button>
+				</div>
 			</div>
 		</div>
 	</div>

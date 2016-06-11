@@ -3,39 +3,110 @@
 	padding: 0;
 	font-family: 'Helvetica Neue', arial, sans-serif;
 }
+/* iPhone 6 screen adjustment */
+@media (max-width: 375px) {
+	* {
+		font-size: 100%;
+	}
+}
+.navbar-brand {
+	font-weight: 700;
+}
+.dropdown .dropdown-menu{
+	font-size: 15px;
+}
+.mainview {
+	min-height: 550px;
+}
+.col-md-5 {
+	float: none;
+	margin-left: auto;
+	margin-right: auto;
+}
+.loginBox {
+	padding: 20px;
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+	width: 100%;
+	max-width: 500px;
+}
+.right {
+	float: right;
+}
 .dollarAmount {
 	font-size: 100px;
 	vertical-align: text-top;
+	height: 30px;
 }
-.red{
+.red {
 	color: #8B0000;
 }
-hr{
+hr {
 	border: 1px dashed #C0C0C0;
 }
-#receipt{
+.center {
+	margin-left: auto;
+	margin-right: auto;
+}
+.tableTitle{
+	font-weight: 700;
+}
+.receiptsTable {
+	table-layout: fixed;
+	width: 400px;
+	margin: 0 auto;
+}
+.receipt {
 	border: 1px solid #C8C8C8;
-	padding: 20px;
+	padding: 5px;
     border-radius: 20px;
 	z-index: 1000;
 	background-color: #FFFFFF;
+	margin: 0 auto;
+	align: center;
+	width: 100%;
+	max-width: 400px;
 }
-.receiptsTable{
-	table-layout: fixed;
+.receiptTitle {
+	padding: 10px;
+	font-weight: 700;
 }
-tr{
-	//height: 50px;
+.receiptTitle .glyphicon {
+	color: #000000 !important;
 }
-.input-currency{
+.receiptBottom {
+	padding: 10px;
+}
+.input-currency {
 	font-size: 100px;
-	text-align: center;
-	width: 250px;
-	border: 0px;
+	text-align: right;
+	width: 80%;
+	border: 0px solid;
 	vertical-align: text-top;
 }
-.dollarSymbol{
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+.dollarSymbol {
 	font-size: 30px;
 }
+textarea:focus, input:focus {
+    outline: none;
+}
+.buttonDiv {
+	width: 50%;
+	display: inline-block;
+}
+.footer {
+	padding: 15px;
+	font-size: 80%;
+	position: static;
+	bottom: 0;
+	width: 100%;
+}
+
 
 /* Dropdown submenu css */
 .dropdown-submenu {
