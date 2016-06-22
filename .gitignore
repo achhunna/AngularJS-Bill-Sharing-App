@@ -1,3 +1,4 @@
 .ftpconfig
 php/myDBInfo.php
 php/testScript.php
+php/guest.php

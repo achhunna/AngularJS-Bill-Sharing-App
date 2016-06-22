@@ -1,3 +1,6 @@
+:root {
+	--theme-color: #1D8348;
+}
 * {
 	margin: 0;
 	padding: 0;
@@ -8,6 +11,12 @@
 	* {
 		font-size: 100%;
 	}
+}
+.navbar-header .navbar-brand {
+	color: var(--theme-color);
+}
+.navbar-header .navbar-brand:hover {
+	color: #000000;
 }
 .navbar-brand {
 	font-weight: 700;
@@ -56,6 +65,9 @@ hr {
 	width: 400px;
 	margin: 0 auto;
 }
+.next a {
+	color: var(--theme-color);
+}
 .receipt {
 	border: 1px solid #C8C8C8;
 	padding: 5px;
@@ -72,7 +84,10 @@ hr {
 	font-weight: 700;
 }
 .receiptTitle .glyphicon {
-	color: #000000 !important;
+	color: #000000;
+}
+.receiptTitle .glyphicon:hover {
+	color: #808080;
 }
 .receiptBottom {
 	padding: 10px;
@@ -84,20 +99,27 @@ hr {
 	border: 0px solid;
 	vertical-align: text-top;
 }
+/* Remove spin button for amount input */
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
 }
-.dollarSymbol {
-	font-size: 30px;
-}
+/* Remove border of input boxes */
 textarea:focus, input:focus {
     outline: none;
+}
+.dollarSymbol {
+	font-size: 30px;
 }
 .buttonDiv {
 	width: 50%;
 	display: inline-block;
+}
+/* Confirm Delete modal box positioning */
+.modal-content {
+	width: 300px;
+	margin: 0 auto;
 }
 .footer {
 	padding: 15px;

@@ -19,7 +19,7 @@ evenup.controller("loginController", function($myService, $scope, $http, $locati
 
 		//Create input class for Error
 		var formErrorClass = "form-group has-error has-feedback";
-		var spanErrorClass = "glyphicon glyphicon-remove form-control-feedback";
+		var spanErrorClass = "glyphicon form-control-feedback";
 
 		$scope.userInput = formDefaultClass;
 		$scope.passwordInput = formDefaultClass;
@@ -29,7 +29,8 @@ evenup.controller("loginController", function($myService, $scope, $http, $locati
 		$scope.passwordError = "";
 
 		$scope.submit = function(){
-			if(user.email == ""){
+			
+			if($scope.user.email == ""){
 				$scope.userInput = formErrorClass;
 				$scope.passwordInput = formDefaultClass;
 				$scope.userSpan = spanErrorClass;
@@ -37,7 +38,7 @@ evenup.controller("loginController", function($myService, $scope, $http, $locati
 				$scope.userError = "Email field is required";
 				$scope.passwordError = "";
 				return;
-			}else if(user.password == ""){
+			}else if($scope.user.password == ""){
 				$scope.userInput = formDefaultClass;
 				$scope.passwordInput = formErrorClass;
 				$scope.userSpan = spanDefaultClass;
@@ -45,44 +46,57 @@ evenup.controller("loginController", function($myService, $scope, $http, $locati
 				$scope.userError = "";
 				$scope.passwordError = "Password field is required";
 				return;
-			}
-			var loginUrl = "./php/loginUser.php";
-			var data = {"email":user.email, "password":user.password};
-			$http.post(loginUrl, data)
-				.success(function(data){
-					//$scope.output = data;
-					if(data["status"] == "Success"){
-						//Update $myService with user info
-						$myService.updateUser(data["id"], data["username"], data["email"]);
-						//Create persistent cookie
-						$cookies.put("userId", data["id"], {expires: cookieExp()});
-						$cookies.put("username", data["username"], {expires: cookieExp()});
-						$cookies.put("email", data["email"], {expires: cookieExp()});
-						$location.path("/dash");
-					}else{
-						switch(data["message"]){
-							case "User is not found":
-								$scope.userInput = formErrorClass;
-								$scope.passwordInput = formDefaultClass;
-								$scope.userSpan = spanErrorClass;
-								$scope.passwordSpan = spanDefaultClass;
-								$scope.userError = data["message"];
-								$scope.passwordError = "";
-								break;
-							case "Incorrect password":
-								$scope.userInput = formDefaultClass;
-								$scope.passwordInput = formErrorClass;
-								$scope.userSpan = spanDefaultClass;
-								$scope.passwordSpan = spanErrorClass;
-								$scope.userError = "";
-								$scope.passwordError = data["message"];
-								break;
+			}else{
+				var loginUrl = "./php/loginUser.php";
+				var data = {"email":user.email, "password":user.password};
+				$http.post(loginUrl, data)
+					.success(function(data){
+						//$scope.output = data;
+						if(data["status"] == "Success"){
+							//Update $myService with user info
+							$myService.updateUser(data["id"], data["username"], data["email"]);
+							//Create persistent cookie
+							$cookies.put("userId", data["id"], {expires: cookieExp()});
+							$cookies.put("username", data["username"], {expires: cookieExp()});
+							$cookies.put("email", data["email"], {expires: cookieExp()});
+							$location.path("/dash");
+						}else{
+							switch(data["message"]){
+								case "User is not found":
+									$scope.userInput = formErrorClass;
+									$scope.passwordInput = formDefaultClass;
+									$scope.userSpan = spanErrorClass;
+									$scope.passwordSpan = spanDefaultClass;
+									$scope.userError = data["message"];
+									$scope.passwordError = "";
+									break;
+								case "Incorrect password":
+									$scope.userInput = formDefaultClass;
+									$scope.passwordInput = formErrorClass;
+									$scope.userSpan = spanDefaultClass;
+									$scope.passwordSpan = spanErrorClass;
+									$scope.userError = "";
+									$scope.passwordError = data["message"];
+									break;
+							}
 						}
-					}
-				})
-				.error(function(err) {
-					$log.error(err);
-				})
+					})
+					.error(function(err) {
+						$log.error(err);
+					})
+			}
+		};
+
+		$scope.fillGuest = function(){
+			var guestUrl = "./php/guest.php";
+
+			$http.post(guestUrl)
+				.success(function(data){
+					$scope.user.email = data["email"];
+					$scope.user.password = data["password"];
+					$scope.submit();
+				});
+
 		};
 	}
 });
@@ -170,7 +184,7 @@ evenup.controller("dashController", function($myService, $scope, $http, $locatio
 			});
 			$scope.submitType = "edit";
 			$scope.noAmount = "";
-			
+
 			//Enable delete button
 			$("#deleteButton").prop('disabled', false);
 		};
@@ -208,7 +222,7 @@ evenup.controller("dashController", function($myService, $scope, $http, $locatio
 			$scope.amount = "";
 			$scope.submitType = "add";
 			showReceipt($scope);
-			
+
 			//Disable delete button
 			$("#deleteButton").prop('disabled', true);
 		}
@@ -217,7 +231,7 @@ evenup.controller("dashController", function($myService, $scope, $http, $locatio
 			hideReceipt($scope);
 			$scope.noAmount = "";
 		}
-		
+
 	}
 });
 

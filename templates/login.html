@@ -5,7 +5,7 @@
 			<div class="{{ userInput }}">
 				<br>
 				<label for="emailInput">Email</label>
-				<input type="email" class="form-control" ng-model="user.email" id="emailInput" placeholder="Email" required />
+				<input type="text" class="form-control" ng-model="user.email" id="emailInput" placeholder="Email" required />
 				<span class="{{ userSpan }}" aria-hidden="true"></span>
 				<div class="textContainer red">{{ userError }}</div>
 			</div>
@@ -23,7 +23,7 @@
 			<br />
 			<div>
 				<span><a href>New User Register</a></span>
-				<span class="right"><a href ng-click="submit()">Login as Guest</a></span>
+				<span class="right"><a href ng-click="fillGuest()">Login as Guest</a></span>
 			</div>
 		</form>
 	</div>
