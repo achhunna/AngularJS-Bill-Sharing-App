@@ -39,6 +39,10 @@
 	width: 100%;
 	max-width: 500px;
 }
+.register {
+	color: var(--theme-color);
+	font-weight: bold;
+}
 .right {
 	float: right;
 }
@@ -59,6 +63,7 @@ hr {
 }
 .tableTitle{
 	font-weight: 700;
+	font-size: 20px;
 }
 .receiptsTable {
 	table-layout: fixed;
@@ -120,6 +125,10 @@ textarea:focus, input:focus {
 .modal-content {
 	width: 300px;
 	margin: 0 auto;
+}
+.disabled {
+    pointer-events:none; //This makes it not clickable
+    opacity:0.6;         //This grays it out to look disabled
 }
 .footer {
 	padding: 15px;

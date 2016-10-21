@@ -7,52 +7,35 @@ evenup.controller("loginController", function($myService, $scope, $http, $locati
 	}else{
 		//Declare variables
 		var user = {
+			firstName: "",
+			lastName: "",
 			email: "",
-			password: ""
+			password: "",
+			password2: "",
 		};
 
 		//Assign to $scope
 		$scope.user = user;
-		//Default input class
-		var formDefaultClass = "form-group";
-		var spanDefaultClass = "glyphicon";
 
-		//Create input class for Error
-		var formErrorClass = "form-group has-error has-feedback";
-		var spanErrorClass = "glyphicon form-control-feedback";
+		$myService.loginAuth($scope, "", "");
 
-		$scope.userInput = formDefaultClass;
-		$scope.passwordInput = formDefaultClass;
-		$scope.userSpan = spanDefaultClass;
-		$scope.passwordSpan = spanDefaultClass;
-		$scope.userError = "";
-		$scope.passwordError = "";
+		$scope.registerFlag = false;
 
 		$scope.submit = function(){
-			
-			if($scope.user.email == ""){
-				$scope.userInput = formErrorClass;
-				$scope.passwordInput = formDefaultClass;
-				$scope.userSpan = spanErrorClass;
-				$scope.passwordSpan = spanDefaultClass;
-				$scope.userError = "Email field is required";
-				$scope.passwordError = "";
+
+			if(!$scope.user.email){
+				$myService.loginAuth($scope, "email", "Email field is required");
 				return;
-			}else if($scope.user.password == ""){
-				$scope.userInput = formDefaultClass;
-				$scope.passwordInput = formErrorClass;
-				$scope.userSpan = spanDefaultClass;
-				$scope.passwordSpan = spanErrorClass;
-				$scope.userError = "";
-				$scope.passwordError = "Password field is required";
+			}else if(!$scope.user.password){
+				$myService.loginAuth($scope, "password", "Password field is required");
 				return;
 			}else{
 				var loginUrl = "./php/loginUser.php";
-				var data = {"email":user.email, "password":user.password};
+				var data = {"email":$scope.user.email, "password":$scope.user.password};
 				$http.post(loginUrl, data)
 					.success(function(data){
 						//$scope.output = data;
-						if(data["status"] == "Success"){
+						if(data["status"] === "Success"){
 							//Update $myService with user info
 							$myService.updateUser(data["id"], data["username"], data["email"]);
 							//Create persistent cookie
@@ -63,25 +46,52 @@ evenup.controller("loginController", function($myService, $scope, $http, $locati
 						}else{
 							switch(data["message"]){
 								case "User is not found":
-									$scope.userInput = formErrorClass;
-									$scope.passwordInput = formDefaultClass;
-									$scope.userSpan = spanErrorClass;
-									$scope.passwordSpan = spanDefaultClass;
-									$scope.userError = data["message"];
-									$scope.passwordError = "";
+									$myService.loginAuth($scope, "email", data["message"]);
 									break;
 								case "Incorrect password":
-									$scope.userInput = formDefaultClass;
-									$scope.passwordInput = formErrorClass;
-									$scope.userSpan = spanDefaultClass;
-									$scope.passwordSpan = spanErrorClass;
-									$scope.userError = "";
-									$scope.passwordError = data["message"];
+									$myService.loginAuth($scope, "password", data["message"]);
 									break;
 							}
 						}
 					})
 					.error(function(err) {
+						$log.error(err);
+					})
+			}
+		};
+
+		$scope.toggleRegister = function(){
+			$scope.registerFlag = !$scope.registerFlag;
+			$myService.clearForm($scope);
+			$myService.loginAuth($scope, "", "");
+		};
+
+		$scope.register = function(){
+			var emptyInput = false;
+			for(var key in $scope.user){
+				if(!$scope.user[key]){
+					$myService.loginClassUpdate($scope, key, true, "Cannot be empty");
+					emptyInput = true;
+				}else{
+					$myService.loginClassUpdate($scope, key, false,  "");
+				}
+			}
+
+			if(!emptyInput){
+				if($scope.user.password !== $scope.user.password2){
+					$myService.loginClassUpdate($scope, "password2", true, "Password mismatch");
+					return;
+				}
+				var registerUrl = "./php/registerUser.php";
+				var data = {"firstname":$scope.user.firstName, "lastname":$scope.user.lastName, "email":$scope.user.email, "password":$scope.user.password};
+				$http.post(registerUrl, data)
+					.success(function(data){
+						if(data["status"] === "Success"){
+							$scope.registerMessage = "User registered";
+							$scope.toggleRegister();
+						}
+					})
+					.error(function(err){
 						$log.error(err);
 					})
 			}

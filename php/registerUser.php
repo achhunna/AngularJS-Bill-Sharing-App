@@ -3,6 +3,11 @@
 require("myDBInfo.php");
 require("MySQLObj.php");
 
+//Checking if data sent from AngularJS
+if(empty($_POST)){
+	$_POST = json_decode(file_get_contents("php://input"), true);
+}
+
 $firstname = htmlentities($_POST["firstname"]);
 $lastname = htmlentities($_POST["lastname"]);
 $email = htmlentities($_POST["email"]);

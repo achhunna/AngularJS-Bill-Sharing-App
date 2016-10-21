@@ -27,42 +27,27 @@ evenup.factory("$myService", function($cookies, $http){
 		name: $cookies.get("username"),
 		email: $cookies.get("email")
 	};
+
+	//Array of login form inputs
+	var loginInput = ["email", "password"];
+	//Array of register form inputs
+	var registerInput = ["firstName", "lastName", "email", "password", "password2"];
+
+	//Default input class for login form
+	var formDefaultClass = "form-group";
+	var spanDefaultClass = "glyphicon";
+	//Create input class for Error for login form
+	var formErrorClass = "form-group has-error has-feedback";
+	var spanErrorClass = "glyphicon form-control-feedback";
+
 	return{
-		updateUser: function(id, name, email){
-			user.id = id;
-			user.name = name;
-			user.email = email;
+		//Clear form elements
+		clearForm: function($scope){
+			for(var each in $scope.user){
+				$scope.user[each] = "";
+			}
 		},
-		returnId: function(){
-			return user.id;
-		},
-		returnName: function(){
-			return user.name;
-		},
-		returnEmail: function(){
-			return user.email;
-		},
-		//Reset scope values
-		reset: function($scope, username, email){
-			$scope.username = username;
-			$scope.email = email;
-			$scope.categories = [
-				"Entertainment",
-				"Food",
-				"Grocery",
-				"Rent",
-				"Travel",
-				"Other"
-			];
-			$scope.expgroup = [
-				"Household"
-			];
-			$scope.categorySelect = $scope.categories[1];
-			$scope.note = "";
-			$scope.expgroupSelect = $scope.expgroup[0];
-			$scope.amount = "";
-			$scope.total = 0;
-		},
+
 		//Create function to load bills
 		loadBills: function($scope, retrieveUrl, email){
 
@@ -103,6 +88,72 @@ evenup.factory("$myService", function($cookies, $http){
 				console.error(err);
 			})
 		},
+
+		//Login form class update
+		loginClassUpdate: function($scope, field, error, message){
+			if(error){
+				$scope[field + "Input"] = formErrorClass;
+				$scope[field + "Span"] = spanErrorClass;
+				$scope[field + "Error"] = message;
+			}else{
+				$scope[field + "Input"] = formDefaultClass;
+				$scope[field + "Span"] = spanDefaultClass;
+				$scope[field + "Error"] = "";
+			}
+		},
+		//Login form auth styles
+		loginAuth: function($scope, errorField, message){
+			var array = [];
+			if($scope.registerFlag === false){
+				array = loginInput;
+			}else{
+				array = registerInput;
+			};
+			for(i=0; i<array.length; i++){
+				if(array[i] === errorField){
+					this.loginClassUpdate($scope, array[i], true, message);
+				}else{
+					this.loginClassUpdate($scope, array[i], false, "");
+				}
+			}
+		},
+
+		//Reset scope values
+		reset: function($scope, username, email){
+			$scope.username = username;
+			$scope.email = email;
+			$scope.categories = [
+				"Entertainment",
+				"Food",
+				"Grocery",
+				"Rent",
+				"Travel",
+				"Other"
+			];
+			$scope.expgroup = [
+				"Household"
+			];
+			$scope.categorySelect = $scope.categories[1];
+			$scope.note = "";
+			$scope.expgroupSelect = $scope.expgroup[0];
+			$scope.amount = "";
+			$scope.total = 0;
+		},
+		returnEmail: function(){
+			return user.email;
+		},
+		returnId: function(){
+			return user.id;
+		},
+		returnName: function(){
+			return user.name;
+		},
+		updateUser: function(id, name, email){
+			user.id = id;
+			user.name = name;
+			user.email = email;
+		},
+
 	};
 });
 
